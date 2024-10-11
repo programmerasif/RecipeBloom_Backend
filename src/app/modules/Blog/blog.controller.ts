@@ -53,6 +53,15 @@ const updateBlog = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getBlogByUser = catchAsync(async (req, res) => {
+  const userId = req.params.userId;
+  const result = await BlogServices.getBlogByUser(userId);
+  res.status(200).json({
+    success: true,
+    message: "get Blog By User retrieved successfully !",
+    data: result,
+  });
+});
 
 export const BlogControllers = {
   createBlog,
@@ -60,4 +69,5 @@ export const BlogControllers = {
   deleteBlogWithId,
   getSingleBlog,
   updateBlog,
+  getBlogByUser
 };

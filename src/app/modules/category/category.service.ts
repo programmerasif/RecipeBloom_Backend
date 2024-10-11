@@ -14,7 +14,7 @@ const deleteCategory = async (categoryId: string) => {
     throw new AppError(404, "Category not found");
   }
 
-  // Remove the category from the Package collection's category array
+  // Remove the category from the recipe collection's category array
   await Recipe.updateMany(
     { category: categoryId },
    
@@ -26,6 +26,7 @@ const deleteCategory = async (categoryId: string) => {
 };
 
 const getAllCategory = async () => {
+
   const res = await Category.find();
   return res;
 };

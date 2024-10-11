@@ -11,16 +11,18 @@ import cookieParser from 'cookie-parser';
 const app: Application = express();
 
 //parsers
-app.use(express.json());
 
-app.use(cors({ origin: ['http://localhost:3000','http://localhost:5000','http://localhost:3001','https://recipe-bloom.vercel.app'],credentials:true }));
+app.use(express.json());
+app.set('trust proxy', true) 
 app.use(cookieParser())
+app.use(cors({ origin: ['http://localhost:3000','http://localhost:5000','http://localhost:3001',"https://tasty-hub-chi.vercel.app"],credentials:true,exposedHeaders:['set-cookie']}));
+
 // application routes
 app.use('/api/v1', router);
 
 app.get('/', (req, res) => {
   res.status(200).json({
-    message: 'recipe-bloom is running ',
+    message: 'Welcome to TastyHub',
   });
 });
 

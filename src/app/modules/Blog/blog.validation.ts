@@ -8,6 +8,7 @@ const BlogValidationSchema = z.object({
     title: z.string({ required_error: 'Title is required' }),
     description: z.string({ required_error: 'Description is required' }),
     image: z.string({ invalid_type_error: 'Invalid  type' }),
+    isPremium: z.boolean({ invalid_type_error: 'Invalid  type' }).optional(),
   }),
 });
 

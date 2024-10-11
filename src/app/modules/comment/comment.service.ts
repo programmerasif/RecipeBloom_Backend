@@ -59,7 +59,7 @@ const getCommentForRecipe = async (
   const recipe = await Recipe.findById(recipeId);
 
   if (!recipe) {
-    throw new AppError(404, "Invalid package Id");
+    throw new AppError(404, "Invalid Recipe Id");
   }
 
   const recipeComment = new QueryBuilder(

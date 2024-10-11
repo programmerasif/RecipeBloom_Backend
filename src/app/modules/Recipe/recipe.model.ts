@@ -1,5 +1,5 @@
-import { model, Schema } from 'mongoose';
-import { TRecipe } from './recipe.interface';
+import { model, Schema } from "mongoose";
+import { TRecipe } from "./recipe.interface";
 
 const ingredientsSchema = new Schema(
   {
@@ -10,9 +10,9 @@ const ingredientsSchema = new Schema(
 
 const RecipeSchema: Schema = new Schema<TRecipe>(
   {
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    Directions: { type: String, required: true },
-    ingredients:[{type:ingredientsSchema ,default:[]}] ,
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+
+    ingredients: [{ type: ingredientsSchema, default: [] }],
     readyIn: {
       type: Number,
       required: true,
@@ -20,7 +20,7 @@ const RecipeSchema: Schema = new Schema<TRecipe>(
     name: { type: String, required: true },
     foodCategory: {
       type: Schema.Types.ObjectId,
-      ref:"Category",
+      ref: "Category",
       required: true,
     },
     isVegetarian: {
@@ -30,35 +30,32 @@ const RecipeSchema: Schema = new Schema<TRecipe>(
     totalPeople: {
       type: Number,
     },
-
+    isPublished: { type: Boolean, default: true },
     description: { type: String, required: true },
 
     recipeImage: { type: String, required: true },
-
+    isPremium: { type: Boolean, required: true, default: false },
     category: {
       type: String,
-      enum: ['Breakfast', 'Dinner', 'Lunch'],
+      enum: ["Breakfast", "Dinner", "Lunch"],
       required: true,
     },
-    disLikes: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
-    likes: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
-    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    disLikes: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
+    likes: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     rating: [
       {
-        userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+        userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
         ratingNumber: { type: Number, required: true, default: 1 },
-        _id:false
+        _id: false,
       },
     ],
     totalAverageRating: { type: Number, default: 1 },
 
-    isDeleted: { type: Boolean, default: false }, 
+    isDeleted: { type: Boolean, default: false },
   },
+
   { timestamps: true },
 );
 
-
-
-
-
-export const Recipe = model<TRecipe>('Recipe', RecipeSchema);
+export const Recipe = model<TRecipe>("Recipe", RecipeSchema);

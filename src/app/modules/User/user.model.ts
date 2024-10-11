@@ -1,10 +1,8 @@
 /* eslint-disable no-useless-escape */
 // models/User.ts
-import mongoose, { Schema } from 'mongoose';
-import { IUser } from './user.interface';
-import { validateEmail } from './user.utils';
-
-
+import mongoose, { Schema } from "mongoose";
+import { IUser } from "./user.interface";
+import { validateEmail } from "./user.utils";
 
 const userSchema: Schema<IUser> = new mongoose.Schema({
   name: {
@@ -17,10 +15,10 @@ const userSchema: Schema<IUser> = new mongoose.Schema({
     lowercase: true,
     // unique: true,
     required: true,
-    validate: [validateEmail, 'Please fill a valid email address'],
+    validate: [validateEmail, "Please fill a valid email address"],
     match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      'Please fill a valid email address',
+      "Please fill a valid email address",
     ],
   },
   password: {
@@ -28,27 +26,28 @@ const userSchema: Schema<IUser> = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'user'],
-    default: 'user',
+    enum: ["admin", "user"],
+    default: "user",
   },
   image: { type: String },
-  followers: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
+  followers: { type: [Schema.Types.ObjectId], ref: "User", default: [] },
+  following: { type: [Schema.Types.ObjectId], ref: "User", default: [] },
   recipePublished: {
     type: [Schema.Types.ObjectId],
-    ref: 'Recipe',
+    ref: "Recipe",
     default: [],
   },
   socialLinks: {
     type: [
       {
-        name: { type: String, enum: ['facebook', 'instagram'] },
+        name: { type: String, enum: ["facebook", "instagram"] },
         link: { type: String },
       },
     ],
   },
-  isPremium: { type: Boolean,default:false },
+  isPremium: { type: Boolean, default: false },
+  bio: { type: String, default: "" },
+  isBlocked: { type: Boolean, default: false },
 });
 
-
-
-export const User = mongoose.model<IUser>('User', userSchema);
+export const User = mongoose.model<IUser>("User", userSchema);

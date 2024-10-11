@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { Types } from "mongoose";
 
 export interface TRecipe {
   user: Types.ObjectId;
@@ -6,9 +6,8 @@ export interface TRecipe {
   description: string;
   ingredients: { name: string }[];
   readyIn: number;
-  Directions: string;
-recipeImage:string
-  category: 'Breakfast' | 'Dinner' | 'Lunch';
+  recipeImage: string;
+  category: "Breakfast" | "Dinner" | "Lunch";
   foodCategory: Types.ObjectId;
   isVegetarian: boolean;
   totalPeople?: number;
@@ -20,11 +19,11 @@ recipeImage:string
     ratingNumber: number;
   }[];
   totalAverageRating: number;
-
+  isPublished: boolean;
+  isPremium: boolean;
   isDeleted: boolean;
 }
-export interface TRating{
-  userId:Types.ObjectId;
-ratingNumber:number;
-
+export interface TRating {
+  userId: Types.ObjectId;
+  ratingNumber: number;
 }
