@@ -19,7 +19,6 @@ const CreateRecipeValidationSchema = z.object({
     totalPeople: z.number().optional(),
     description: z.string().nonempty("Description is required"),
     recipeImage: z.string().url("Recipe image must be a valid URL"),
-    category: z.enum(["Breakfast", "Dinner", "Lunch"]),
     disLikes: z
       .array(
         z.string().refine((val) => Types.ObjectId.isValid(val), {

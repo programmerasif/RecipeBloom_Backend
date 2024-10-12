@@ -19,8 +19,7 @@ const RecipeSchema: Schema = new Schema<TRecipe>(
     },
     name: { type: String, required: true },
     foodCategory: {
-      type: Schema.Types.ObjectId,
-      ref: "Category",
+      type: String,
       required: true,
     },
     isVegetarian: {
@@ -35,11 +34,6 @@ const RecipeSchema: Schema = new Schema<TRecipe>(
 
     recipeImage: { type: String, required: true },
     isPremium: { type: Boolean, required: true, default: false },
-    category: {
-      type: String,
-      enum: ["Breakfast", "Dinner", "Lunch"],
-      required: true,
-    },
     disLikes: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
     likes: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],

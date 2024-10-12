@@ -7,8 +7,7 @@ export interface TRecipe {
   ingredients: { name: string }[];
   readyIn: number;
   recipeImage: string;
-  category: "Breakfast" | "Dinner" | "Lunch";
-  foodCategory: Types.ObjectId;
+  foodCategory: string;
   isVegetarian: boolean;
   totalPeople?: number;
   comments: string[];
