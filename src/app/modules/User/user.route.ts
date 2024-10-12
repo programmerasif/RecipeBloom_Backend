@@ -20,6 +20,10 @@ router.patch(
   auth(USER_ROLE.admin),
   UserController.promoteToAdmin,
 );
+router.patch(
+  "/promote-premium/:id",
+  UserController.promoteToPremium,
+);
 
 router.patch(
   "/:id",

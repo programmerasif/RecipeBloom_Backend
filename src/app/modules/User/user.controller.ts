@@ -72,6 +72,17 @@ const promoteToAdmin = catchAsync(async (req, res) => {
     data: result && null,
   });
 });
+const promoteToPremium = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await UserService.promoteToPremium(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "promote To Premium account successfully",
+    data: result && null,
+  });
+});
 
 const followUser = catchAsync(async (req, res) => {
   const { userId, targetUserId } = req.body;
@@ -106,4 +117,5 @@ export const UserController = {
   promoteToAdmin,
   unFollowUser,
   followUser,
+  promoteToPremium
 };

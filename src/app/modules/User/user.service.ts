@@ -60,6 +60,15 @@ const promoteToAdmin = async (userId: string) => {
 
   return user;
 };
+const promoteToPremium = async (userId: string) => {
+  const user = await User.findByIdAndUpdate(
+    userId,
+    { isBlocked: false, isPremium: true },
+    { new: true },
+  );
+
+  return user;
+};
 
 const followUser = async (
   userId: Types.ObjectId,
@@ -111,4 +120,5 @@ export const UserService = {
   promoteToAdmin,
   followUser,
   unFollowUser,
+  promoteToPremium
 };
