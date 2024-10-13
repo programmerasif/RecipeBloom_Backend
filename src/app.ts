@@ -15,7 +15,13 @@ const app: Application = express();
 app.use(express.json());
 app.set('trust proxy', true) 
 app.use(cookieParser())
-app.use(cors({ origin: ['http://localhost:3000','http://localhost:5000','http://localhost:3001',"https://tasty-hub-chi.vercel.app"],credentials:true,exposedHeaders:['set-cookie']}));
+app.use(cors({
+  origin: ['http://localhost:3000'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'], 
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-refresh-token', 'Origin', 'X-Requested-With', 'Accept'], 
+  exposedHeaders: ['set-cookie'],
+}));
 
 // application routes
 app.use('/api/v1', router);

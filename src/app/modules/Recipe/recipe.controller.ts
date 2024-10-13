@@ -24,7 +24,7 @@ const getAllRecipe = catchAsync(async (req, res) => {
   });
 });
 const getRecipeForUser = catchAsync(async (req, res) => {
-  const { meta, result } = await RecipeServices.getRecipeForUser(
+  const { meta, result,hasMore } = await RecipeServices.getRecipeForUser(
     req.params.userId,
     req?.query,
   );

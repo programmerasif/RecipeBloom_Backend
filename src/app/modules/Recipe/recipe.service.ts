@@ -64,7 +64,10 @@ const getRecipeForUser = async (id: string, query: Record<string, unknown>) => {
     .fields();
   const result = await recipeQuery.modelQuery;
   const meta = await recipeQuery.countTotal();
-  return { result, meta };
+  
+  const hasMore = meta?.totalPage > meta?.page
+  
+  return { result, meta ,hasMore};
 };
 const getSingleRecipe = async (id: string, query: Record<string, unknown>) => {
   const recipeQuery = new QueryBuilder(

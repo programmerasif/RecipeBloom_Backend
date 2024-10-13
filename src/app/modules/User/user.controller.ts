@@ -73,7 +73,10 @@ const promoteToAdmin = catchAsync(async (req, res) => {
   });
 });
 const promoteToPremium = catchAsync(async (req, res) => {
+ 
   const { id } = req.params;
+
+  
   const result = await UserService.promoteToPremium(id);
 
   sendResponse(res, {
