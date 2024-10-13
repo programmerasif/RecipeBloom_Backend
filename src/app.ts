@@ -16,7 +16,7 @@ app.use(express.json());
 app.set('trust proxy', true) 
 app.use(cookieParser())
 app.use(cors({
-  origin: ['http://localhost:3000'],
+  origin: ['http://localhost:3000',"https://recipe-bloom-backend.vercel.app"],
   credentials: true,
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'], 
   allowedHeaders: ['Content-Type', 'Authorization', 'x-refresh-token', 'Origin', 'X-Requested-With', 'Accept'], 
