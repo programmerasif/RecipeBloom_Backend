@@ -3,7 +3,8 @@ import { Types } from "mongoose";
 export interface IUser {
   name: string;
   image: string;
-
+  resetPasswordToken: string | null;  
+  resetPasswordExpires: Date | null;
   email: string;
   password?: string;
   role: "admin" | "user";

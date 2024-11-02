@@ -24,6 +24,14 @@ const userSchema: Schema<IUser> = new mongoose.Schema({
   password: {
     type: String,
   },
+  resetPasswordToken: {
+    type: String,
+    default: null, 
+  },
+  resetPasswordExpires: {
+    type: Date,
+    default: null , 
+  },
   role: {
     type: String,
     enum: ["admin", "user"],

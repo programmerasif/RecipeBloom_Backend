@@ -6,6 +6,7 @@ import { RecipeRoutes } from '../modules/Recipe/recipe.route';
 import { CommentRoutes } from '../modules/comment/comment.route';
 import { BlogRouter } from '../modules/Blog/blog.route';
 import { CategoryRoutes } from '../modules/category/category.route';
+import { paymentRoutes } from '../Payment/payment.route';
 
 type TModuleRoutes = {
   path: string;
@@ -18,6 +19,10 @@ const moduleRoutes: TModuleRoutes[] = [
   {
     path: '/users',
     route: UserRoutes,
+  },
+  {
+    path: '/payment',
+    route: paymentRoutes,
   },
 
   {

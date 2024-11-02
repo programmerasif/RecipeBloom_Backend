@@ -5,6 +5,7 @@ import AppError from "../../errors/AppError";
 import { UserSearchableFields } from "./user.constant";
 import { IUser } from "./user.interface";
 import { User } from "./user.model";
+import { initialPayment } from "../../Payment/Payment.utils";
 
 const findUserById = async (userId: string) => {
   return await User.findById(userId);
@@ -66,8 +67,10 @@ const promoteToPremium = async (userId: string) => {
     { isBlocked: false, isPremium: true },
     { new: true },
   );
+const paymentLink = initialPayment({customerName:user?.name,customerEmail:user?.email,customerPhone:"01721XXXXXXXX",})
 
-  return user;
+
+  return paymentLink;
 };
 
 const followUser = async (

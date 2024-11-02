@@ -83,7 +83,7 @@ const promoteToPremium = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: "promote To Premium account successfully",
-    data: result && null,
+    data: result ,
   });
 });
 
@@ -111,6 +111,7 @@ const unFollowUser = catchAsync(async (req, res) => {
   });
 });
 
+
 export const UserController = {
   findUserById,
   getAllUsers,
@@ -120,5 +121,5 @@ export const UserController = {
   promoteToAdmin,
   unFollowUser,
   followUser,
-  promoteToPremium
+  promoteToPremium,
 };
