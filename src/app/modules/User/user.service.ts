@@ -1,4 +1,5 @@
-import { Types } from "mongoose";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import mongoose, { Types } from "mongoose";
 import QueryBuilder from "../../builder/QueryBuilder";
 import AppError from "../../errors/AppError";
 
@@ -6,6 +7,7 @@ import { UserSearchableFields } from "./user.constant";
 import { IUser } from "./user.interface";
 import { User } from "./user.model";
 import { initialPayment } from "../../Payment/Payment.utils";
+import bcrypt from "bcrypt";
 
 const findUserById = async (userId: string) => {
   return await User.findById(userId);
@@ -67,8 +69,11 @@ const promoteToPremium = async (userId: string) => {
     { isBlocked: false, isPremium: true },
     { new: true },
   );
-const paymentLink = initialPayment({customerName:user?.name,customerEmail:user?.email,customerPhone:"01721XXXXXXXX",})
-
+  const paymentLink = initialPayment({
+    customerName: user?.name,
+    customerEmail: user?.email,
+    customerPhone: "01721XXXXXXXX",
+  });
 
   return paymentLink;
 };
@@ -114,6 +119,39 @@ const unFollowUser = async (userId: string, targetUserId: string) => {
   return user;
 };
 
+const getFollowersByIdDB = async (id: string) => {
+  const user = await User.findById(id).populate("followers");
+
+  return user?.followers;
+};
+const getFollowingByIdDB = async (id: string) => {
+  const user = await User.findById(id).populate("following");
+  return user?.following;
+};
+const updatePasswordByEmailDB = async (payload: any) => {
+  const { email, oldPassword, newPassword } = payload;
+
+ 
+
+
+  const user = await User.findOne({email});
+  if (!user) {
+    throw new AppError(404, "User not found");
+  }
+
+  const isMatch = await bcrypt.compare(oldPassword, user.password as string);
+  if (!isMatch) {
+    throw new AppError(400, "Old password is incorrect");
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+  user.password = hashedPassword;
+  await user.save();
+
+  return user;
+};
 export const UserService = {
   findUserById,
   getAllUsers,
@@ -123,5 +161,8 @@ export const UserService = {
   promoteToAdmin,
   followUser,
   unFollowUser,
-  promoteToPremium
+  promoteToPremium,
+  getFollowersByIdDB,
+  getFollowingByIdDB,
+  updatePasswordByEmailDB,
 };

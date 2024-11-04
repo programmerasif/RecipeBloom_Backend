@@ -110,6 +110,39 @@ const unFollowUser = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getFollowersById = catchAsync(async (req, res) => {
+  const {id } = req.params;
+  const result = await UserService.getFollowersByIdDB(id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Get Followers successfully",
+    data: result,
+  });
+});
+const getFollowingsById = catchAsync(async (req, res) => {
+  const {id } = req.params;
+  const result = await UserService.getFollowingByIdDB(id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Get Following successfully",
+    data: result,
+  });
+});
+const updatePasswordByEmail = catchAsync(async (req, res) => {
+  console.log("Request body:", req.body);  
+  const result = await UserService.updatePasswordByEmailDB(req?.body)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Password Update successfully",
+    data: result,
+  });
+});
 
 
 export const UserController = {
@@ -122,4 +155,7 @@ export const UserController = {
   unFollowUser,
   followUser,
   promoteToPremium,
+  getFollowersById,
+  getFollowingsById,
+  updatePasswordByEmail
 };

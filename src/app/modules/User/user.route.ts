@@ -27,14 +27,16 @@ router.patch(
 
 router.patch(
   "/:id",
-  auth(USER_ROLE.admin, USER_ROLE.user),
   validateRequest(updateUserValidationSchema),
   UserController.updateUserById,
 );
 
-router.post("/follow", auth(USER_ROLE.user,USER_ROLE.admin), UserController.followUser);
-router.post("/unfollow", auth(USER_ROLE.user,USER_ROLE.admin), UserController.unFollowUser);
+router.post("/follow", UserController.followUser);
+router.post("/unfollow", UserController.unFollowUser);
 
 router.delete("/:id", auth(USER_ROLE.admin), UserController.deleteUserById);
-
+router.get("/followers/:id", UserController.getFollowersById);
+router.get("/following/:id", UserController.getFollowingsById);
+router.post("/updatePass", UserController.updatePasswordByEmail);
+ 
 export const UserRoutes = router;

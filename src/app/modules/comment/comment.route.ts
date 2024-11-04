@@ -10,6 +10,22 @@ route.post(
   validateRequest(CommentValidation.createCommentValidation),
   CommentControllers.createComment,
 );
+route.patch(
+  '/updateComment',
+  CommentControllers.updateComment,
+);
+route.delete(
+  '/deleteComment',
+  CommentControllers.deleteComment,
+);
+route.post(
+  '/like',
+  CommentControllers.createLike,
+);
+route.post(
+  '/dislike',
+  CommentControllers.createDislike,
+);
 
 
 route.get('/:id', CommentControllers.getCommentForRecipe);
