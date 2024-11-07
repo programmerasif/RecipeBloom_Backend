@@ -12,7 +12,7 @@ const paymentConfirmation = catchAsync(async (req, res) => {
     <h1 style="color: #6ABE4C; font-size: 24px; margin-bottom: 10px;">Payment Successful!</h1>
     <p style="color: #333333; font-size: 16px; margin-bottom: 20px;">Thank you for your payment. Your transaction has been completed successfully.</p>
     
-    <button onclick="window.location.href='http://localhost:3000/recipe-feed'" style="padding: 10px 20px; background-color: #6ABE4C; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+    <button onclick="window.location.href='https://recipe-bloom.vercel.app/recipe-feed'" style="padding: 10px 20px; background-color: #6ABE4C; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
       Go Back
     </button>
   </div>

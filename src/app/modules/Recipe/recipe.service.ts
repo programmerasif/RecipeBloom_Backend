@@ -36,7 +36,7 @@ const getAllRecipe = async (query: Record<string, unknown>) => {
     Recipe.find({ isDeleted: false }).populate(["user", "foodCategory"]),
     query,
   )
-    .search(["name", "description"])
+    .search(["name", ])
     .filter()
     .sort()
     .paginate()
@@ -119,63 +119,50 @@ const deleteRecipe = async (id: string) => {
   };
 
 
-const createRating = async (recipeId: string, payload: TRating) => {
-  const RecipeData = await Recipe.findById(recipeId);
-  if (!RecipeData) {
-    throw new AppError(httpStatus.NOT_FOUND, "Invalid Recipe Id");
-  }
-  const userData = await User.findById(payload.userId);
-  if (!userData) {
-    throw new AppError(httpStatus.NOT_FOUND, "Invalid user Id");
-  }
-
-  const ratingData = RecipeData.rating;
-
-  const existingRating = ratingData.find(
-    (rating) => rating.userId === payload.userId,
-  );
-
-  if (existingRating) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      "Rating from this user already exists.",
+  const createRating = async (recipeId: string, payload: TRating) => {
+    const recipe = await Recipe.findById(recipeId);
+    if (!recipe) {
+      throw new AppError(httpStatus.NOT_FOUND, "Invalid Recipe Id");
+    }
+  
+    const user = await User.findById(payload.userId);
+    if (!user) {
+      throw new AppError(httpStatus.NOT_FOUND, "Invalid User Id");
+    }
+  
+    // Check if user has already rated this recipe
+    const existingRating = recipe.rating.find(
+      (rating) => rating.userId.toString() === payload.userId.toString()
     );
-  }
-
-  if (ratingData.length === 0) {
-    RecipeData.totalAverageRating = payload.ratingNumber;
-
-    RecipeData.rating.push(payload);
-  } else {
-    RecipeData.rating.push(payload);
-
-    // Proceed with average recalculation if there are existing ratings
-    const totalRatings = RecipeData.rating.length;
-
-    const ratingSum = RecipeData.rating.reduce(
+  
+    if (existingRating) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        "Rating from this user already exists."
+      );
+    }
+  
+    // Add the new rating
+    recipe.rating.push(payload);
+  
+    // Recalculate the average rating
+    const totalRatings = recipe.rating.length;
+    const ratingSum = recipe.rating.reduce(
       (acc, rating) => acc + rating.ratingNumber,
-      0,
+      0
     );
-
-    // Update individual average ratings
-    RecipeData.totalAverageRating = parseFloat(
-      (ratingSum / totalRatings).toFixed(1),
-    );
-  }
-
-  // Save the updated recipe
-
-  const result = await RecipeData.save();
-  return result;
-};
-
+    recipe.totalAverageRating = parseFloat((ratingSum / totalRatings).toFixed(1));
+  
+    // Save the updated recipe
+    const result = await recipe.save();
+    return result;
+  };
 export const RecipeServices = {
   createRecipe,
   getAllRecipe,
   getSingleRecipe,
   updateRecipe,
   deleteRecipe,
-
   togglePublishStatus,
   createRating,
   getRecipeForUser,

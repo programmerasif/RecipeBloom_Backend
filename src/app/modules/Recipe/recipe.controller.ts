@@ -92,7 +92,6 @@ export const RecipeControllers = {
   getSingleRecipe,
   deleteRecipe,
   updateRecipe,
-
   createRating,
   getRecipeForUser,
   togglePublishStatus,
